@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import posts from "./fakeDb.json";
+import CommentList from "./CommentList";
 
 /**
  * Component for displaying post
@@ -19,6 +20,7 @@ const PostView = () => {
       <h2>{ post.title }</h2>
       <p><i>{ post.description }</i></p>
       <p>{ post.body }</p>
+      <CommentList comments={ post.comments } />
     </>
   );
 };
