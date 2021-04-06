@@ -9,7 +9,7 @@ const NewPostForm = () => {
   return (
     <>
       <h2>New Post</h2>
-      <PostForm />
+      <PostForm redirect="/" />
     </>
   );
 };
