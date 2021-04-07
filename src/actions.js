@@ -17,12 +17,7 @@ const addPost = (id, post) => {
     type: ADD_POST,
     id,
     title: { title: post.title, description: post.description },
-    post: {
-      title: post.title,
-      description: post.description,
-      body: post.body,
-      comments: {}
-    }
+    post
   };
 };
 
