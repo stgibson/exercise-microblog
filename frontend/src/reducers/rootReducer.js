@@ -11,8 +11,8 @@ import {
 
 /**
  * Manages state based on action
- * @param {Object{Object{string|Object{string}}}} state 
- * @param {Object{string|Object{string|Object{string}}}} action 
+ * @param {Object{Object{string|Object{string}|numbe}}} state 
+ * @param {Object{string|Object{string|Object{string}|number}}} action 
  * @returns new state
  */
 const rootReducer = (state={ titles: {}, posts: {}, err: "" }, action) => {

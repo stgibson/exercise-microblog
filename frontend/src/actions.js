@@ -56,7 +56,7 @@ const getTitlesFromAPI = () => {
 /**
  * Creates action to load a post in redux store
  * @param {string} id 
- * @param {Object{string|Object{string}}} post 
+ * @param {Object{string|Object{string}}|number} post 
  * @returns action
  */
 const getPost = (id, post) => {
@@ -72,12 +72,14 @@ const getPostFromAPI = (id) => {
   return async dispatch => {
     try {
       const res = await axios.get(`${BASE_URL}/${id}`);
-      const { title, description, body } = res.data;
+      const { title, description, body, votes } = res.data;
       const comments = res.data.comments.reduce((comments, nextComment) => {
         comments[nextComment.id] = nextComment.text;
         return comments;
       }, {});
-      dispatch(getPost(res.data.id, { title, description, body, comments }));
+      dispatch(
+        getPost(res.data.id, { title, description, body, comments, votes })
+      );
     }
     catch(err) {
       dispatch(showErr(err.message));
@@ -88,7 +90,7 @@ const getPostFromAPI = (id) => {
 /**
  * Creates action to add post in redux store
  * @param {string} id 
- * @param {Object{string|Object{string}}} post 
+ * @param {Object{string|Object{string}|number}} post 
  * @returns action
  */
 const addPost = (id, post) => {
@@ -102,7 +104,7 @@ const addPost = (id, post) => {
 
 /**
  * Creates thunk that adds post to db before adding it to redux store
- * @param {Object{string|Object{string}}} post 
+ * @param {Object{string|Object{string}|number}} post 
  * @returns thunk
  */
 const addPostToAPI = (post) => {
@@ -120,7 +122,7 @@ const addPostToAPI = (post) => {
 /**
  * Creates action to edit post in redux store
  * @param {string} id 
- * @param {Object{string|Object{string}}} post 
+ * @param {Object{string|Object{string}|number}} post 
  * @returns action
  */
 const editPost = (id, post) => {
@@ -135,7 +137,7 @@ const editPost = (id, post) => {
 /**
  * Creates thunk that edits post in db before editing it in redux store
  * @param {string} id 
- * @param {Object{string|Object{string}}} post 
+ * @param {Object{string|Object{string}|number}} post 
  * @returns thunk
  */
 const editPostInAPI = (id, post) => {

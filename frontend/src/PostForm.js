@@ -12,6 +12,8 @@ const defaultInitFormData = {
 
 /**
  * Component for displaying form to add or edit a post
+ * @params {Object{Object{string|Object{string}|number}|function|string}}
+ * param0
  * @returns JSX code for rendering form
  */
 const PostForm = ({

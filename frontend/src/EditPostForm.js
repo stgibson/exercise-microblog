@@ -5,7 +5,7 @@ import PostForm from "./PostForm";
 
 /**
  * Component for displaying form to edit a post
- * @param {Object{string|Object{string|Object{string}}}} param0 
+ * @param {Object{string|Object{string|Object{string}|number}}} param0 
  * @returns JSX code for rendering edit post form
  */
 const EditPostForm = ({ id, post }) => {
