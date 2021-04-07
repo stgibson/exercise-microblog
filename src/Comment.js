@@ -13,6 +13,9 @@ import "./Comment.css";
 const Comment = ({ postId, commentId, comment }) => {
   const dispatch = useDispatch();
 
+  /**
+   * Uses dispatch to delete comment
+   */
   const handleDeleteComment = () => {
     dispatch(deleteComment(postId, commentId));
   };

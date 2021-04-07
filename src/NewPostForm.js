@@ -11,6 +11,10 @@ import PostForm from "./PostForm";
 const NewPostForm = () => {
   const dispatch = useDispatch();
 
+  /**
+   * Uses dispatch to add a post
+   * @param {Object{string|Object{string}}} data 
+   */
   const handleAddPost = data => {
     const id = uuid();
     dispatch(addPost(id, data));

@@ -3,23 +3,37 @@ import { useHistory, Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
+const defaultInitFormData = {
+  title: "",
+  description: "",
+  body: "",
+  comments: {}
+}
+
 /**
  * Component for displaying form to add or edit a post
  * @returns JSX code for rendering form
  */
 const PostForm = ({
-  initFormData={ title: "", description: "", body: "" },
+  initFormData=defaultInitFormData,
   doOnSubmit,
   redirect
 }) => {
   const history = useHistory();
   const [formData, setFormData] = useState(initFormData);
 
+  /**
+   * Updates formData when user types in input
+   * @param {Object{any}} evt 
+   */
   const handleChange = evt => {
     const { id, value } = evt.target;
     setFormData(formData => ({ ...formData, [id]: value }));
   };
 
+  /**
+   * Calls doOnSubmit and redirects when user submits form
+   */
   const handleSubmit = () => {
     doOnSubmit(formData);
     history.push(redirect);

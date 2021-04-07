@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, shallowEqual } from "react-redux";
 import { v4 as uuid } from "uuid";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -10,7 +10,7 @@ import Title from "./Title";
  * @returns JSX code for rendering post list
  */
 const TitleList = () => {
-  const posts = useSelector(store => store.posts);
+  const posts = useSelector(store => store.posts, shallowEqual);
 
   return (
     <Row>

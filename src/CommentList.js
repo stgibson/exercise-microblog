@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { v4 as uuid } from "uuid";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -8,12 +8,15 @@ import Comment from "./Comment";
 
 /**
  * Component for displaying list of comments and form to add a comment
- * @param {Array[string]} param0 
+ * @param {Object{string}} param0 
  * @returns JSX code for rendering list of comments
  */
 const CommentList = ({ postId }) => {
   const dispatch = useDispatch();
-  const comments = useSelector(store => store.posts[postId].comments);
+  const comments = useSelector(
+    store => store.posts[postId].comments,
+    shallowEqual
+  );
   const [newComment, setNewComment] = useState("");
 
   /**
@@ -27,7 +30,7 @@ const CommentList = ({ postId }) => {
 
   /**
    * Adds newComment to list of post's comments
-   * @param {Object} evt 
+   * @param {Object{any}} evt 
    */
   const handleAddComment = evt => {
     evt.preventDefault();

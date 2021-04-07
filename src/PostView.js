@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,19 +17,26 @@ const PostView = () => {
   const history = useHistory();
   const { postId } = useParams();
   const dispatch = useDispatch();
-  const posts = useSelector(store => store.posts);
+  const posts = useSelector(store => store.posts, shallowEqual);
   const [post, setPost] = useState({});
   const [showForm, setShowForm] = useState(false);
 
+  /**
+   * Uses dispatch to delete a post, and redirects to homepage
+   */
   const handleDeletePost = () => {
     dispatch(deletePost(postId));
     history.push("/");
   };
 
+  /**
+   * Shows edit post form
+   */
   const showEditPostForm = () => {
     setShowForm(true);
   }
 
+  // when post is edited, should hide edit post form
   useEffect(() => {
     setShowForm(false);
   }, [post]);

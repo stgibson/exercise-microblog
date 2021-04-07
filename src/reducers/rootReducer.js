@@ -8,6 +8,12 @@ import {
 
 import data from "../fakeDb.json";
 
+/**
+ * Manages state based on action
+ * @param {Object{Object{string|Object{string}}}} state 
+ * @param {Object{string|Object{string|Object{string}}}} action 
+ * @returns new state
+ */
 const rootReducer = (state=data, action) => {
   switch(action.type) {
     case ADD_POST:
