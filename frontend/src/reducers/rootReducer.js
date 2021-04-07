@@ -6,7 +6,9 @@ import {
   EDIT_POST,
   DELETE_POST,
   ADD_COMMENT,
-  DELETE_COMMENT
+  DELETE_COMMENT,
+  UP_VOTE,
+  DOWN_VOTE
 } from "../actionTypes";
 
 /**
@@ -86,6 +88,56 @@ const rootReducer = (state={ titles: {}, posts: {}, err: "" }, action) => {
           }
         }
       };
+    case UP_VOTE:
+      if (state.posts[action.id]) {
+        const newVote = state.posts[action.id].votes + 1;
+        return {
+          ...state,
+          titles: {
+            ...state.titles,
+            [action.id]: { ...state.titles[action.id], votes: newVote }
+          },
+          posts: {
+            ...state.posts,
+            [action.id]: { ...state.posts[action.id], votes: newVote }
+          }
+        };
+      }
+      else {
+        const newVote = state.titles[action.id].votes + 1;
+        return {
+          ...state,
+          titles: {
+            ...state.titles,
+            [action.id]: { ...state.titles[action.id], votes: newVote }
+          }
+        };
+      }
+    case DOWN_VOTE:
+      if (state.posts[action.id]) {
+        const newVote = state.posts[action.id].votes - 1;
+        return {
+          ...state,
+          titles: {
+            ...state.titles,
+            [action.id]: { ...state.titles[action.id], votes: newVote }
+          },
+          posts: {
+            ...state.posts,
+            [action.id]: { ...state.posts[action.id], votes: newVote }
+          }
+        };
+      }
+      else {
+        const newVote = state.titles[action.id].votes - 1;
+        return {
+          ...state,
+          titles: {
+            ...state.titles,
+            [action.id]: { ...state.titles[action.id], votes: newVote }
+          }
+        };
+      }
     default:
       return state;
   }

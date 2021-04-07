@@ -4,8 +4,18 @@ import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes, faEdit } from "@fortawesome/free-solid-svg-icons";
-import { getPostFromAPI, deletePostInAPI } from "./actions";
+import {
+  faTimes,
+  faEdit,
+  faThumbsUp,
+  faThumbsDown
+} from "@fortawesome/free-solid-svg-icons";
+import {
+  getPostFromAPI,
+  deletePostInAPI,
+  upVoteInAPI,
+  downVoteInAPI
+} from "./actions";
 import CommentList from "./CommentList";
 import EditPostForm from "./EditPostForm.js";
 
@@ -27,6 +37,20 @@ const PostView = () => {
   const handleDeletePost = () => {
     dispatch(deletePostInAPI(postId));
     history.push("/");
+  };
+
+  /**
+   * Uses dispatch to up-vote a post
+   */
+  const handleUpVote = () => {
+    dispatch(upVoteInAPI(postId));
+  };
+
+  /**
+   * Uses dispatch to down-vote a post
+   */
+  const handleDownVote = () => {
+    dispatch(downVoteInAPI(postId));
   };
 
   /**
@@ -57,10 +81,10 @@ const PostView = () => {
       <>
         <h2>{ post.title }</h2>
         <Row>
-          <Col xs={ 11 }>
+          <Col xs={ 10 }>
             <p><i>{ post.description }</i></p>
           </Col>
-          <Col xs={ 1 }>
+          <Col xs={ 2 }>
             <FontAwesomeIcon
               icon={ faEdit }
               color="#017cff"
@@ -71,6 +95,26 @@ const PostView = () => {
               color="red"
               onClick={ handleDeletePost }
             />
+            <div>
+              {
+                post.votes === 1 ? `${post.votes} vote:` :
+                  `${post.votes} votes:`
+              }
+              <span>
+                <FontAwesomeIcon
+                  className="ml-2"
+                  icon={ faThumbsUp }
+                  color="green"
+                  onClick={ handleUpVote }
+                />
+                <FontAwesomeIcon
+                  className="ml-1"
+                  icon={ faThumbsDown }
+                  color="red"
+                  onClick={ handleDownVote }
+                />
+              </span>
+            </div>
           </Col>
         </Row>
         <p>{ post.body }</p>

@@ -7,7 +7,8 @@ const defaultInitFormData = {
   title: "",
   description: "",
   body: "",
-  comments: {}
+  comments: {},
+  votes: 0
 }
 
 /**

@@ -7,7 +7,9 @@ import {
   EDIT_POST,
   DELETE_POST,
   ADD_COMMENT,
-  DELETE_COMMENT
+  DELETE_COMMENT,
+  UP_VOTE,
+  DOWN_VOTE
 } from "./actionTypes";
 
 const BASE_URL = "http://localhost:5000/api/posts";
@@ -41,7 +43,8 @@ const getTitlesFromAPI = () => {
       const titles = res.data.reduce((titles, nextTitle) => {
         titles[nextTitle.id] = {
           title: nextTitle.title,
-          description: nextTitle.description
+          description: nextTitle.description,
+          votes: nextTitle.votes
         };
         return titles;
       }, {});
@@ -94,10 +97,11 @@ const getPostFromAPI = (id) => {
  * @returns action
  */
 const addPost = (id, post) => {
+  const { title, description, votes } = post;
   return {
     type: ADD_POST,
     id,
-    title: { title: post.title, description: post.description },
+    title: { title, description, votes },
     post
   };
 };
@@ -126,10 +130,11 @@ const addPostToAPI = (post) => {
  * @returns action
  */
 const editPost = (id, post) => {
+  const { title, description, votes } = post;
   return {
     type: EDIT_POST,
     id,
-    title: { title: post.title, description: post.description },
+    title: { title, description, votes },
     post
   };
 };
@@ -236,6 +241,58 @@ const deleteCommentInAPI = (postId, commentId) => {
   };
 };
 
+/**
+ * Creates action to up-vote post in redux store
+ * @param {string} id 
+ * @returns action
+ */
+const upVote = (id) => {
+  return { type: UP_VOTE, id };
+};
+
+/**
+ * Creates thunk that up-votes post in db before up-voting it in redux store
+ * @param {string} id 
+ * @returns thunk
+ */
+const upVoteInAPI = (id) => {
+  return async dispatch => {
+    try {
+      await axios.post(`${BASE_URL}/${id}/vote/up`);
+      dispatch(upVote(id));
+    }
+    catch(err) {
+      dispatch(showErr(err.message));
+    }
+  };
+};
+
+/**
+ * Creates action to down-vote post in redux store
+ * @param {string} id 
+ * @returns action
+ */
+const downVote = (id) => {
+  return { type: DOWN_VOTE, id };
+};
+
+/**
+ * Creates thunk that down-votes post in db before down-voting it in redux store
+ * @param {string} id 
+ * @returns thunk
+ */
+const downVoteInAPI = (id) => {
+  return async dispatch => {
+    try {
+      await axios.post(`${BASE_URL}/${id}/vote/down`);
+      dispatch(downVote(id));
+    }
+    catch(err) {
+      dispatch(showErr(err.message));
+    }
+  };
+};
+
 export {
   getTitlesFromAPI,
   getPostFromAPI,
@@ -243,5 +300,7 @@ export {
   editPostInAPI,
   deletePostInAPI,
   addCommentToAPI,
-  deleteCommentInAPI
+  deleteCommentInAPI,
+  upVoteInAPI,
+  downVoteInAPI
 };
