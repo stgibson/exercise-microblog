@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faEdit } from "@fortawesome/free-solid-svg-icons";
-import { deletePost } from "./actions";
+import { getPostFromAPI, deletePostInAPI } from "./actions";
 import CommentList from "./CommentList";
 import EditPostForm from "./EditPostForm.js";
 
@@ -25,7 +25,7 @@ const PostView = () => {
    * Uses dispatch to delete a post, and redirects to homepage
    */
   const handleDeletePost = () => {
-    dispatch(deletePost(postId));
+    dispatch(deletePostInAPI(postId));
     history.push("/");
   };
 
@@ -46,10 +46,11 @@ const PostView = () => {
     if (posts[postId]) {
       setPost(posts[postId]);
     }
+    // if post isn't in store, load from API
     else {
-      history.push("/");
+      dispatch(getPostFromAPI(postId));
     }
-  }, [postId, posts, history]);
+  }, [postId, posts, history, dispatch]);
 
   if (Object.keys(post).length) {
     return (

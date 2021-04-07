@@ -10,13 +10,15 @@ import Title from "./Title";
  * @returns JSX code for rendering post list
  */
 const TitleList = () => {
-  const posts = useSelector(store => store.posts, shallowEqual);
+  const titles = useSelector(store => store.titles, shallowEqual);
 
   return (
     <Row>
       {
-        Object.keys(posts).map(postId => (
-          <Col key={ uuid() } xs={ 6 }><Title id={ postId } post={ posts[postId] } /></Col>
+        Object.keys(titles).map(titleId => (
+          <Col key={ uuid() } xs={ 6 }>
+            <Title id={ titleId } title={ titles[titleId] } />
+          </Col>
         ))
       }
     </Row>

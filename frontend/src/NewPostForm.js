@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { v4 as uuid } from "uuid";
-import { addPost } from "./actions";
+import { addPostToAPI } from "./actions";
 import PostForm from "./PostForm";
 
 /**
@@ -16,8 +15,7 @@ const NewPostForm = () => {
    * @param {Object{string|Object{string}}} data 
    */
   const handleAddPost = data => {
-    const id = uuid();
-    dispatch(addPost(id, data));
+    dispatch(addPostToAPI(data));
   };
 
   return (

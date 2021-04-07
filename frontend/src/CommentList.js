@@ -3,7 +3,7 @@ import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { v4 as uuid } from "uuid";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { addComment } from "./actions";
+import { addCommentToAPI } from "./actions";
 import Comment from "./Comment";
 
 /**
@@ -34,8 +34,7 @@ const CommentList = ({ postId }) => {
    */
   const handleAddComment = evt => {
     evt.preventDefault();
-    const commentId = uuid();
-    dispatch(addComment(postId, commentId, newComment));
+    dispatch(addCommentToAPI(postId, newComment));
     setNewComment("");
   };
 

@@ -1,4 +1,7 @@
 import {
+  SHOW_ERR,
+  LOAD_TITLES,
+  LOAD_POST,
   ADD_POST,
   EDIT_POST,
   DELETE_POST,
@@ -6,16 +9,20 @@ import {
   DELETE_COMMENT
 } from "../actionTypes";
 
-import data from "../fakeDb.json";
-
 /**
  * Manages state based on action
  * @param {Object{Object{string|Object{string}}}} state 
  * @param {Object{string|Object{string|Object{string}}}} action 
  * @returns new state
  */
-const rootReducer = (state=data, action) => {
+const rootReducer = (state={ titles: {}, posts: {}, err: "" }, action) => {
   switch(action.type) {
+    case SHOW_ERR:
+      return { ...state, err: action.msg };
+    case LOAD_TITLES:
+      return { ...state, titles: action.titles };
+    case LOAD_POST:
+      return { ...state, posts: { ...state.posts, [action.id]: action.post } };
     case ADD_POST:
       return {
         ...state,

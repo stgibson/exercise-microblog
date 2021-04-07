@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { editPost } from "./actions";
+import { editPostInAPI } from "./actions";
 import PostForm from "./PostForm";
 
 /**
@@ -16,7 +16,7 @@ const EditPostForm = ({ id, post }) => {
    * @param {Object{string|Object{string}}} data 
    */
   const handleEditPost = data => {
-    dispatch(editPost(id, data));
+    dispatch(editPostInAPI(id, data));
   };
 
   return (

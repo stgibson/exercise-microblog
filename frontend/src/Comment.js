@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { deleteComment } from "./actions";
+import { deleteCommentInAPI } from "./actions";
 import "./Comment.css";
 
 /**
@@ -17,7 +17,7 @@ const Comment = ({ postId, commentId, comment }) => {
    * Uses dispatch to delete comment
    */
   const handleDeleteComment = () => {
-    dispatch(deleteComment(postId, commentId));
+    dispatch(deleteCommentInAPI(postId, commentId));
   };
 
   return (

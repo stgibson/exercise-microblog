@@ -6,17 +6,17 @@ import "./Title.css";
 /**
  * Component for displaying a card with a post's title and description, and a
  * link to the post view page for the post
- * @param {Object{string|Object{string|Object{string}}}} param0 
+ * @param {Object{string|Object{string}}} param0 
  * @returns JSX code for rendering post title and description card
  */
-const Title = ({ id, post }) => {
+const Title = ({ id, title }) => {
   return (
     <Card className="mb-3">
       <Card.Body>
         <Card.Text>
-          <Link to={ `/${id}` }>{ post.title }</Link>
+          <Link to={ `/${id}` }>{ title.title }</Link>
           <br />
-          <i className="Title-description">{ post.description }</i>
+          <i className="Title-description">{ title.description }</i>
         </Card.Text>
       </Card.Body>
     </Card>
