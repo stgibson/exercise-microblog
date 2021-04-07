@@ -11,11 +11,12 @@ import "./Title.css";
  */
 const Title = ({ id, post }) => {
   return (
-    <Card>
+    <Card className="mb-3">
       <Card.Body>
         <Card.Text>
           <Link to={ `/${id}` }>{ post.title }</Link>
-          <div className="Title-description"><i>{ post.description }</i></div>
+          <br />
+          <i className="Title-description">{ post.description }</i>
         </Card.Text>
       </Card.Body>
     </Card>

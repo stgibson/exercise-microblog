@@ -1,6 +1,8 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { deleteComment } from "./actions";
 import "./Comment.css";
 
 /**
@@ -8,10 +10,16 @@ import "./Comment.css";
  * @param {Object{string}} param0 
  * @returns JSX code for rendering a comment
  */
-const Comment = ({ comment }) => {
+const Comment = ({ postId, commentId, comment }) => {
+  const dispatch = useDispatch();
+
+  const handleDeleteComment = () => {
+    dispatch(deleteComment(postId, commentId));
+  };
+
   return (
     <div className="Comment">
-      <FontAwesomeIcon icon={ faTimes } color="red" /><span>{ comment }</span>
+      <FontAwesomeIcon icon={ faTimes } color="red" onClick={ handleDeleteComment } /><span>{ comment }</span>
     </div>
   );
 };

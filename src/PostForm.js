@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import { useHistory, Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
 
 /**
  * Component for displaying form to add or edit a post
@@ -9,8 +9,10 @@ import { Link } from "react-router-dom";
  */
 const PostForm = ({
   initFormData={ title: "", description: "", body: "" },
+  doOnSubmit,
   redirect
 }) => {
+  const history = useHistory();
   const [formData, setFormData] = useState(initFormData);
 
   const handleChange = evt => {
@@ -18,8 +20,9 @@ const PostForm = ({
     setFormData(formData => ({ ...formData, [id]: value }));
   };
 
-  const handleSubmit = evt => {
-    evt.preventDefault();
+  const handleSubmit = () => {
+    doOnSubmit(formData);
+    history.push(redirect);
   };
 
   return (
@@ -51,9 +54,9 @@ const PostForm = ({
           />
         </Form.Group>
       </Form>
-      <Link to={ redirect }>
-        <Button className="mr-2 py-1" variant="primary">Save</Button>
-      </Link>
+      <Button className="mr-2 py-1" variant="primary" onClick={ handleSubmit }>
+        Save
+      </Button>
       <Link to={ redirect }>
         <Button className="py-1" variant="secondary">Cancel</Button>
       </Link>

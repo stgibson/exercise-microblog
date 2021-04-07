@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faEdit } from "@fortawesome/free-solid-svg-icons";
-import posts from "./fakeDb.json";
+import { deletePost } from "./actions";
 import CommentList from "./CommentList";
 import EditPostForm from "./EditPostForm.js";
 
@@ -15,10 +16,13 @@ import EditPostForm from "./EditPostForm.js";
 const PostView = () => {
   const history = useHistory();
   const { postId } = useParams();
+  const dispatch = useDispatch();
+  const posts = useSelector(store => store.posts);
   const [post, setPost] = useState({});
   const [showForm, setShowForm] = useState(false);
 
-  const deletePost = () => {
+  const handleDeletePost = () => {
+    dispatch(deletePost(postId));
     history.push("/");
   };
 
@@ -32,10 +36,15 @@ const PostView = () => {
 
   // set post based on URL param
   useEffect(() => {
-    setPost(posts[postId]);
-  }, [postId]);
+    if (posts[postId]) {
+      setPost(posts[postId]);
+    }
+    else {
+      history.push("/");
+    }
+  }, [postId, posts, history]);
 
-  if (post) {
+  if (Object.keys(post).length) {
     return (
       <>
         <h2>{ post.title }</h2>
@@ -52,12 +61,12 @@ const PostView = () => {
             <FontAwesomeIcon
               icon={ faTimes }
               color="red"
-              onClick={ deletePost }
+              onClick={ handleDeletePost }
             />
           </Col>
         </Row>
         <p>{ post.body }</p>
-        <CommentList comments={ post.comments } />
+        <CommentList postId={ postId } />
         { showForm && <EditPostForm id={ postId } post={ post } /> }
       </>
     );

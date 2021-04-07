@@ -1,4 +1,7 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { v4 as uuid } from "uuid";
+import { addPost } from "./actions";
 import PostForm from "./PostForm";
 
 /**
@@ -6,10 +9,17 @@ import PostForm from "./PostForm";
  * @returns JSX code for rendering page to add a new post
  */
 const NewPostForm = () => {
+  const dispatch = useDispatch();
+
+  const handleAddPost = data => {
+    const id = uuid();
+    dispatch(addPost(id, data));
+  };
+
   return (
     <>
       <h2>New Post</h2>
-      <PostForm redirect="/" />
+      <PostForm doOnSubmit={ handleAddPost } redirect="/" />
     </>
   );
 };
